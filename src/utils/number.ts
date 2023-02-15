@@ -8,11 +8,9 @@ export function useNumberFormat(number: number): string | number {
   if (number > 10000000) {
     return Number((number / 10000000).toFixed(1)) + ' 千万';
   }
-
   if (number > 10000) {
     return Number((number / 10000).toFixed(1)) + ' 万';
   }
-
   return number;
 }
 
@@ -28,9 +26,8 @@ export function useFormatDuring(during: number) {
 }
 
 // 计算两个时间间隔
-export function useTimeInterval(time: number): string {
+export function useTimeInterval(time: number, isRecent = false): string {
   let timestamp = new Date().getTime(); //计算当前时间戳
-
   //   间隔时间戳
   let interval = timestamp - time;
 
@@ -38,7 +35,9 @@ export function useTimeInterval(time: number): string {
   let intervalDays = interval / (24 * 60 * 60 * 1000);
   let timeInfo;
   if (intervalDays > 1) {
-    timeInfo = dayjs(time).format('YYYY-MM-DD HH:MM');
+    timeInfo = isRecent
+      ? dayjs(time).format('YYYY-MM-DD')
+      : dayjs(time).format('YYYY-MM-DD HH:MM');
   } else {
     let hours = interval / (1000 * 60 * 60);
     if (hours > 1) {
@@ -49,7 +48,7 @@ export function useTimeInterval(time: number): string {
         timeInfo = parseInt(String(min)) + '分钟前';
       } else {
         let second = interval / 1000;
-        timeInfo = parseInt(String(second)) + '秒前';
+        timeInfo = isRecent ? '刚刚' : parseInt(String(second)) + '秒前';
       }
     }
   }

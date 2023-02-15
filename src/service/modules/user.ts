@@ -4,8 +4,7 @@ import LxRequest from '../index';
 export async function getQrKey() {
   const { data } = await LxRequest.request({
     url: '/login/qr/key',
-    method: 'get',
-    params: { timerstamp: Date.now() }
+    method: 'get'
   });
   return data;
 }
@@ -15,7 +14,7 @@ export async function createQrImage(key) {
   const { data } = await LxRequest.request({
     url: '/login/qr/create',
     method: 'get',
-    params: { key, qrimg: 1, timerstamp: Date.now() }
+    params: { key, qrimg: 1 }
   });
   return data;
 }
@@ -25,7 +24,7 @@ export async function checkQrStatus(key) {
   const data = await LxRequest.request({
     url: '/login/qr/check',
     method: 'get',
-    params: { key, timerstamp: Date.now() }
+    params: { key }
   });
   return data;
 }
@@ -34,9 +33,9 @@ export async function checkQrStatus(key) {
 export async function getAccountInfo() {
   const data = await LxRequest.request({
     url: '/user/account',
-    method: 'get',
-    params: { cookie: localStorage.getItem('USER-COOKIE') }
+    method: 'get'
   });
+
   return data;
 }
 
@@ -45,7 +44,7 @@ export async function getUserDetail(uid) {
   const data = await LxRequest.request({
     url: '/user/detail',
     method: 'get',
-    params: { uid, cookie: localStorage.getItem('USER-COOKIE') }
+    params: { uid }
   });
   return data;
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="leading-5">
     <template v-if="show">
-      <span v-if="!isShow">{{ text.substring(0, end) }}...</span>
+      <span v-if="!isShow">{{ text?.substring(0, end) }}...</span>
       <span v-else>{{ text }}...</span>
       <span class="ml-5 text-gray-700 hover-text" @click="isShow = !isShow"
         >[{{ isShow ? '收起' : '详情' }}]</span
@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const props = defineProps<{ text: string; end: number }>();
+const props = defineProps<{ text?: string; end: number }>();
 
 const show = ref(false);
 const isShow = ref(false);

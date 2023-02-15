@@ -1,77 +1,81 @@
 <template>
-  <el-popover
-    placement="bottom-start"
-    trigger="click"
-    popper-class="popperClass popover-width"
-  >
-    <template #reference>
-      <button class="button-outline px-5">
-        <span class="mr-2"
-          >全部视频 <IconPark :icon="Right" /> {{ currentGroupTitle }}</span
-        >
-      </button>
-    </template>
-    <div>
-      <div class="h-96 py-5 pl-5">
-        <ElScrollbar>
-          <div class="text-xs gap-5 grid grid-flow-row grid-cols-5">
-            <div
-              class="hover-text"
-              :class="{ 'text-active': curId === item.id }"
-              v-for="item in videoGroup"
-              :key="item.id"
-              @click="idChange(item.id)"
-            >
-              {{ item.name }}
+  <div v-if="isLogin">
+    <el-popover
+      placement="bottom-start"
+      trigger="click"
+      popper-class="popperClass popover-width"
+    >
+      <template #reference>
+        <button class="button-outline px-5">
+          <span class="mr-2"
+            >全部视频 <IconPark :icon="Right" /> {{ currentGroupTitle }}</span
+          >
+        </button>
+      </template>
+      <div>
+        <div class="h-96 py-5 pl-5">
+          <ElScrollbar>
+            <div class="text-xs gap-5 grid grid-flow-row grid-cols-5">
+              <div
+                class="hover-text"
+                :class="{ 'text-active': curId === item.id }"
+                v-for="item in videoGroup"
+                :key="item.id"
+                @click="idChange(item.id)"
+              >
+                {{ item.name }}
+              </div>
             </div>
-          </div>
-        </ElScrollbar>
+          </ElScrollbar>
+        </div>
       </div>
-    </div>
-  </el-popover>
-  <div
-    class="grid grid-flow-row grid-cols-2 miniplayer:grid-cols-3 xl:grid-cols-4 gap-5 mt-5"
-  >
+    </el-popover>
     <div
-      v-for="{ data } in videoList"
-      @click="checkvideo(data.vid)"
-      :key="data.vid"
-      class="cursor-pointer"
+      class="grid grid-flow-row grid-cols-2 miniplayer:grid-cols-3 xl:grid-cols-4 gap-5 mt-5"
     >
-      <CoverPlay
-        :pic-url="data?.coverUrl"
-        video
-        :playCount="data?.playTime"
-        :showPlayCount="true"
-      />
-      <div class="text-xs mt-3 truncate hover-text">{{ data.title }}</div>
       <div
-        class="text-xs mt-1 truncate cursor-pointer hover-text text-slate-400"
+        v-for="{ data } in videoList"
+        @click="checkvideo(data.vid)"
+        :key="data.vid"
+        class="cursor-pointer"
       >
-        <span class="mr-1">by</span>{{ data.creator.nickname }}
+        <CoverPlay
+          :pic-url="data?.coverUrl"
+          video
+          :playCount="data?.playTime"
+          :showPlayCount="true"
+        />
+        <div class="text-xs mt-3 truncate hover-text">{{ data.title }}</div>
+        <div
+          class="text-xs mt-1 truncate cursor-pointer hover-text text-slate-400"
+        >
+          <span class="mr-1">by</span>{{ data.creator.nickname }}
+        </div>
       </div>
     </div>
+    <div class="py-10">
+      <el-button
+        class="text-center w-full"
+        @click="loadMore"
+        color="rgb(30, 30, 31)"
+        :loading="loading"
+        >加载更多</el-button
+      >
+    </div>
   </div>
-
-  <div class="py-10">
-    <el-button
-      class="text-center w-full"
-      @click="loadMore"
-      color="rgb(30, 30, 31)"
-      :loading="loading"
-      >加载更多</el-button
-    >
-  </div>
+  <goLogin v-else></goLogin>
 </template>
 
 <script lang="ts" setup>
-import { Right } from "@icon-park/vue-next";
-import IconPark from "@/components/common/IconPark.vue";
-import { onMounted, watch } from "vue";
-import { useVideoStore } from "@/store/video";
-import { useRouter } from "vue-router";
-import { storeToRefs } from "pinia";
+import { Right } from '@icon-park/vue-next';
+import IconPark from '@/components/common/IconPark.vue';
+import { onMounted, watch } from 'vue';
+import { useVideoStore } from '@/store/video';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/store/user';
 
+let { isLogin } = storeToRefs(useUserStore());
 const { getDataAction, getVideoListAction } = useVideoStore();
 let { videoList, videoGroup, page, curId, loading, currentGroupTitle } =
   storeToRefs(useVideoStore());
@@ -101,7 +105,7 @@ let loadMore = () => {
 
 //check video
 let checkvideo = (id) => {
-  Router.push({ name: "videoPlayer", query: { id } });
+  Router.push({ name: 'videoPlayer', query: { id } });
 };
 
 onMounted(async () => {

@@ -36,9 +36,9 @@ declare global {
 
   interface Number {
     toDate(this: number, format?: string): string;
-
     numberFormat(this: number): string | number;
     toTodayTime(this: number): string | number;
+    toTodayTimebyRecent(this: number): string | number;
   }
 }
 Array.prototype.first = function <T>(this: T[]): T {
@@ -80,4 +80,10 @@ Number.prototype.numberFormat = function (this: number): string | number {
 
 Number.prototype.toTodayTime = function (this: number): string | number {
   return useTimeInterval(this);
+};
+
+Number.prototype.toTodayTimebyRecent = function (
+  this: number
+): string | number {
+  return useTimeInterval(this, true);
 };

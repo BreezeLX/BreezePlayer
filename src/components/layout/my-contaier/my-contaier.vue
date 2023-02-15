@@ -32,4 +32,11 @@ import PlayList from '../playList/playList.vue';
     padding: 0px;
   }
 }
+
+:deep(.el-dialog) {
+  border-radius: 5px;
+  .el-dialog__header {
+    display: none;
+  }
+}
 </style>

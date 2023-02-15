@@ -26,12 +26,12 @@
     <div class="px-3 flex items-center">
       <div class="cursor-pointer flex items-center px-2">
         <div class="flex items-center" v-if="isLogin">
-          <el-avatar :size="40" :src="profile.avatarUrl" />
+          <el-avatar :size="40" :src="profile?.avatarUrl" />
           <div class="pl-2 hidden miniplayer:block cursor-pointer">
-            {{ profile.nickname }}
+            {{ profile?.nickname }}
           </div>
         </div>
-        <div v-else class="logined-wrap" @click="checkLogin">
+        <div v-if="!isLogin" class="logined-wrap" @click="checkLogin">
           <i class="pl-2 cursor-pointer">登录</i>
         </div>
       </div>
@@ -85,13 +85,14 @@
   </el-dialog>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { Search } from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
 import { Platte, Lock, Phone, Mail } from '@icon-park/vue-next';
 import { useUserStore } from '@/store/user';
 import { getQrKey, createQrImage, checkQrStatus } from '@/service/modules/user';
 import { storeToRefs } from 'pinia';
+import Bus from '@/utils/eventBus';
 
 const router = useRouter();
 const searchvalue = ref();
@@ -101,14 +102,7 @@ const password = ref('');
 const qr = ref('');
 let { checkLoginStatus } = useUserStore();
 let { profile, isLogin } = storeToRefs(useUserStore());
-//前进后退按钮
-let checkTopBtn = (key) => {
-  if (key === 'forward') {
-    router.back();
-  } else {
-    router.forward();
-  }
-};
+
 //弹出登录层
 let timer;
 let checkLogin = async () => {
@@ -133,13 +127,25 @@ let checkLogin = async () => {
   }, 1000);
 };
 
+Bus.$on('checkLoginAction', checkLogin);
+//前进后退按钮
+let checkTopBtn = (key) => {
+  if (key === 'forward') {
+    router.back();
+  } else {
+    router.forward();
+  }
+};
+
 let onDialogClose = () => {
   clearInterval(timer);
 };
 let loginSubmit = () => {
   console.log('点击了提交登录');
 };
-
+onUnmounted(() => {
+  Bus.$off('checkLoginAction');
+});
 onMounted(checkLoginStatus);
 </script>
 

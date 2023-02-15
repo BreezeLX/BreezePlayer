@@ -89,6 +89,24 @@ const routes: Array<RouteRecordRaw> = [
           menu: 'videoPlayer',
           keepAlive: true
         }
+      },
+      {
+        path: 'favorite',
+        name: 'favorite',
+        component: () => import('@/page/favorite/favorite.vue'),
+        meta: {
+          menu: 'favorite',
+          keepAlive: true
+        }
+      },
+      {
+        path: 'recent',
+        name: 'recent',
+        component: () => import('@/page/recent/recent.vue'),
+        meta: {
+          menu: 'recent',
+          keepAlive: true
+        }
       }
     ]
   }

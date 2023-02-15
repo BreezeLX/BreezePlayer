@@ -13,6 +13,60 @@
       </div>
     </div>
   </div>
+  <!-- 我的歌单模块 -->
+  <div class="side-wrapper">
+    <div
+      class="side-title flex items-center cursor-pointer"
+      @click="switchList('create')"
+    >
+      <div>我创建的歌单</div>
+      <IconPark
+        :icon="Right"
+        size="20"
+        v-if="!createdListSpread"
+        theme="outline"
+      />
+      <IconPark :icon="Down" size="20" v-else theme="outline" />
+    </div>
+    <div
+      v-if="createdListSpread"
+      v-for="item in createdList"
+      :key="item.id"
+      @click="checkPlaylist(item.id)"
+    >
+      <div class="pl-2 py-1 flex items-center rounded my-1 cursor-pointer">
+        <IconPark :icon="MusicMenu" size="20" theme="outline" />
+        <span class="truncate ml-1">{{ item.name }}</span>
+      </div>
+    </div>
+    <!-- 我收藏的歌单模块 -->
+    <div class="side-wrapper">
+      <div
+        class="side-title flex items-center cursor-pointer"
+        @click="switchList('collect')"
+      >
+        <div>我收藏的歌单</div>
+        <IconPark
+          :icon="Right"
+          size="20"
+          v-if="!collectListSpread"
+          theme="outline"
+        />
+        <IconPark :icon="Down" size="20" v-else theme="outline" />
+      </div>
+      <div
+        v-if="collectListSpread"
+        v-for="item in collectList"
+        :key="item.id"
+        @click="checkPlaylist(item.id)"
+      >
+        <div class="pl-2 py-1 flex items-center rounded my-1 cursor-pointer">
+          <IconPark :icon="MusicMenu" size="20" theme="outline" />
+          <span class="truncate ml-1">{{ item.name }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -24,16 +78,22 @@ import {
   Like,
   Computer,
   DownloadThree,
-  PlayTwo
+  PlayTwo,
+  Down,
+  Right,
+  MusicMenu
 } from '@icon-park/vue-next';
 import { useRoute, useRouter } from 'vue-router';
-import { ref, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
+import { getUserMusicList } from '@/service/modules/playlist';
+import { useUserStore } from '@/store/user';
+import { storeToRefs } from 'pinia';
 
 interface IMenu {
   name: string;
   key: string;
-  icon: any;
-  theme: 'outline' | 'filled' | 'two-tone' | 'multi-color';
+  icon?: any;
+  theme?: 'outline' | 'filled' | 'two-tone' | 'multi-color';
 }
 
 interface IMenus {
@@ -75,8 +135,8 @@ const menus: IMenus[] = [
     name: '我的音乐',
     menus: [
       {
-        name: '我喜欢',
-        key: 'love',
+        name: '我喜欢的音乐',
+        key: 'favorite',
         icon: Like,
         theme: 'outline'
       },
@@ -94,7 +154,7 @@ const menus: IMenus[] = [
       },
       {
         name: '最近播放',
-        key: 'recently',
+        key: 'recent',
         icon: PlayTwo,
         theme: 'outline'
       }
@@ -105,15 +165,60 @@ const menus: IMenus[] = [
 const route = useRoute();
 const currentKey = ref(route.meta.menu);
 const router = useRouter();
+const { musicList } = storeToRefs(useUserStore());
+
+let createdListSpread = ref(false);
+let collectListSpread = ref(false);
+let createdList = reactive<any[]>([]);
+let collectList = reactive<any[]>([]);
+
 watch(
   () => route.meta.menu,
   (menu) => {
     currentKey.value = menu;
   }
 );
+
+watch(
+  musicList,
+  (newVal: any[]) => {
+    console.log(newVal);
+    collectList = newVal.filter((item) => item.subscribed);
+    createdList = newVal.filter((item) => !item.subscribed);
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+);
+
+//点击展开歌单
+let switchList = (type: string) => {
+  if (type == 'create') {
+    createdListSpread.value = !createdListSpread.value;
+  } else {
+    collectListSpread.value = !collectListSpread.value;
+  }
+};
+// 点击我的歌单列表
+let checkPlaylist = async (id: number) => {
+  await router.push({ name: 'playlist', query: { id }, replace: true });
+};
+
+//获取用户歌单
 const click = async (menu: IMenu) => {
   await router.push({ name: menu.key, replace: true });
 };
+
+const getData = async () => {
+  // collectList = playlist.filter((item) => item.subscribed);
+  // console.log('我收藏的歌单', collectList);
+  // let createdList = playlist.filter((item) => !item.subscribed);
+};
+
+onMounted(() => {
+  getData();
+});
 </script>
 
 <style scoped lang="scss">
@@ -122,6 +227,7 @@ const click = async (menu: IMenu) => {
 }
 .side-wrapper {
   color: rgb(102, 102, 102);
+  font-size: 15px;
 }
 .side-title {
   text-align: left;
@@ -135,7 +241,7 @@ const click = async (menu: IMenu) => {
     cursor: pointer;
     transition: all 0.2s;
     border-radius: 8px;
-    padding: 10px 10px;
+    padding: 5px 10px;
     margin: 5px 0;
     display: flex;
   }

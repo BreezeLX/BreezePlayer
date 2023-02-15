@@ -7,7 +7,7 @@ import App from './App.vue';
 import router from './router';
 
 import ElementPlus from 'element-plus';
-//elex响应式
+//ele响应式
 import 'element-plus/dist/index.css';
 import 'element-plus/theme-chalk/display.css';
 

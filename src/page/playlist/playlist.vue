@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import {
   getPlayListTrackAll,
@@ -31,12 +31,11 @@ const { pushPlayList, play } = usePlayerStore();
 
 const playAll = () => {
   pushPlayList(true, ...songs.value);
-
   play(songs.value.first().id);
 };
 
 const getData = () => {
-  const id: number = Number(route.query.id);
+  const id: any = route.query.id;
   getPlayListDetail(id).then((res) => {
     console.log('歌单详情', res);
     playlist.value = res;
@@ -46,6 +45,15 @@ const getData = () => {
     songs.value = res;
   });
 };
+
+watch(
+  () => route.query.id,
+  () => {
+    if (route.name == 'playlist') {
+      getData();
+    }
+  }
+);
 onMounted(getData);
 </script>
 

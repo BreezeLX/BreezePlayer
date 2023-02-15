@@ -14,7 +14,7 @@ export async function getVideoList(id?: number, offset?: number) {
   const data = await LxRequest.request({
     url: id ? '/video/group' : '/video/timeline/recommend',
     method: 'get',
-    params: { id, cookie: localStorage.getItem('USER-COOKIE'), offset }
+    params: { id }
   });
   return data;
 }
@@ -24,7 +24,7 @@ export async function getVideoUrl(id) {
   const data = await LxRequest.request({
     url: '/video/url',
     method: 'get',
-    params: { id, cookie: localStorage.getItem('USER-COOKIE') }
+    params: { id }
   });
   return data;
 }
@@ -34,7 +34,7 @@ export async function getVideoDetail(id) {
   const data = await LxRequest.request({
     url: '/video/detail',
     method: 'get',
-    params: { id, cookie: localStorage.getItem('USER-COOKIE') }
+    params: { id }
   });
   return data;
 }
@@ -44,7 +44,37 @@ export async function getRelatedVideo(id) {
   const data = await LxRequest.request({
     url: '/related/allvideo',
     method: 'get',
-    params: { id, cookie: localStorage.getItem('USER-COOKIE') }
+    params: { id }
+  });
+  return data;
+}
+
+// 获取mv播放地址
+export async function getMvUrl(id) {
+  const data = await LxRequest.request({
+    url: '/mv/url',
+    method: 'get',
+    params: { id }
+  });
+  return data;
+}
+
+// 获取mv数据
+export async function getMvDetail(id) {
+  const data = await LxRequest.request({
+    url: '/mv/detail',
+    method: 'get',
+    params: { mvid: id }
+  });
+  return data;
+}
+
+// 获取 mv 点赞转发评论数数据
+export async function getMvDetailInfo(id) {
+  const data = await LxRequest.request({
+    url: '/mv/detail/info',
+    method: 'get',
+    params: { mvid: id }
   });
   return data;
 }

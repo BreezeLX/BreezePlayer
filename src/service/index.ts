@@ -6,7 +6,12 @@ const LxRequest = new LXRequest({
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptors(config) {
-      // console.log("个别axios instance请求成功拦截");
+      if (!config?.params) {
+        config.params = {};
+      }
+
+      config.params.timestamp = Date.now();
+      config.params.cookie = localStorage.getItem('USER-COOKIE') || '';
       return config;
     },
     requestInterceptorsCatch(err) {
@@ -16,6 +21,7 @@ const LxRequest = new LXRequest({
       return res;
     },
     responseInterceptorsCatch(err) {
+      console.log(err);
       return err;
     }
   }

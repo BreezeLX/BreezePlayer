@@ -10,11 +10,12 @@ export async function getPlayListDetail(id: number, s: number = 8) {
 
 // 获取歌单音乐
 export async function getPlayListTrackAll(id: number) {
-  const { songs } = await LxRequest.request({
+  console.log('拿到的蚕食', id);
+  const data = await LxRequest.request({
     url: `playlist/track/all?id=${id}`,
     method: 'get'
   });
-  return songs;
+  return data?.songs;
 }
 
 //获取歌单分类
@@ -35,5 +36,18 @@ export async function getTopPlaylistHighquality(params?: {
   return await LxRequest.request({
     url: 'top/playlist/highquality',
     params
+  });
+}
+
+// 获取用户歌单
+export async function getUserMusicList(obj) {
+  console.log(obj);
+  return await LxRequest.request({
+    url: '/user/playlist',
+    params: {
+      uid: obj.uid,
+      limit: obj.limit || 30,
+      offset: obj.offset || 0
+    }
   });
 }
