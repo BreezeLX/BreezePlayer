@@ -15,11 +15,11 @@
             {{ videoDetail?.creator?.nickname }}
           </div>
         </div>
-        <div class="bg-slate-600 py-2 px-5 rounded-3xl cursor-pointer">
+        <div class="main-color py-2 px-5 rounded-xl cursor-pointer">
           <IconPark :icon="Plus" />关注
         </div>
       </div>
-      <div class="text-2xl py-5">
+      <div class="text-2xl pt-5 pb-2 font-semibold">
         {{ videoDetail?.title }}
       </div>
       <div class="flex">
@@ -30,24 +30,30 @@
       </div>
       <div class="flex items-center pt-2">
         <div
-          class="bg-gray-600 px-2 rounded-xl mr-3 cursor-pointer hover-text"
+          class="video-tag-wrap px-2 rounded-xl mr-3 cursor-pointer hover-text"
           v-for="item in videoDetail?.videoGroup"
         >
           {{ item.name }}
         </div>
       </div>
       <div class="flex pt-3">
-        <div class="border py-1 px-5 rounded-3xl mr-3">
+        <div
+          class="video-operate-wrap py-1 px-5 rounded-lg cursor-pointer mr-3"
+        >
           <IconPark :icon="ThumbsUp" /><span class="ml-2"
             >点赞 {{ videoDetail?.praisedCount }}</span
           >
         </div>
-        <div class="border py-1 px-5 rounded-3xl mr-3">
+        <div
+          class="video-operate-wrap py-1 px-5 rounded-lg cursor-pointer mr-3"
+        >
           <IconPark :icon="FolderFailedOne" /><span class="ml-2"
             >收藏 {{ videoDetail?.subscribeCount }}</span
           >
         </div>
-        <div class="border py-1 px-5 rounded-3xl mr-3">
+        <div
+          class="video-operate-wrap py-1 px-5 rounded-lg cursor-pointer mr-3"
+        >
           <IconPark :icon="Share" /><span class="ml-2"
             >分享 {{ videoDetail?.shareCount }}
           </span>
@@ -75,7 +81,7 @@
           </div>
           <div
             @click="sendCommentAction"
-            class="cursor-pointer w-28 ml-2 bg-gray-600 rounded text-center flex items-center justify-center"
+            class="main-color cursor-pointer w-28 ml-2 rounded text-center flex items-center justify-center"
           >
             <span>发送</span>
           </div>
@@ -91,7 +97,10 @@
         >
           最热
         </div>
-        <span class="bg-white h-5 mx-7" style="width: 1px; opacity: 0.5"></span>
+        <span
+          class="bg-slate-400 h-5 mx-7"
+          style="width: 1px; opacity: 0.5"
+        ></span>
         <div
           class="cursor-pointer"
           :class="{
@@ -117,9 +126,8 @@
         <el-button
           v-if="!pageData.tabChangeLoading"
           :loading="pageData.commentLoading"
-          class="text-center w-full"
+          class="Btn text-center w-full"
           @click="loadMore(pageData.hasmore)"
-          color="rgb(30, 30, 31)"
           >{{ pageData.hasmore ? '加载更多' : '没有更多评论啦~' }}</el-button
         >
       </div>
@@ -387,38 +395,6 @@ onMounted(() => {
 <style scoped lang="scss">
 :deep(.el-loading-spinner) {
   top: 10% !important;
-}
-
-button {
-  border: 1px solid rgba(255, 255, 255, 0.289);
-}
-.el-button {
-  color: rgb(222, 222, 222);
-}
-
-.inputDeep {
-  ::-webkit-scrollbar {
-    width: 8px; /*滚动条宽度*/
-    height: 8px; /*滚动条高度*/
-  }
-  .el-textarea__inner::-webkit-scrollbar-thumb {
-    background-color: rgba(168, 168, 168, 0.4); /*滚动条默认显示的颜色*/
-  }
-
-  .el-textarea__inner::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    background-color: white; /*滚动条背景色显示的颜色*/
-  }
-  :deep(.el-textarea__inner) {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.276) inset;
-    background-color: rgba(255, 0, 0, 0);
-    resize: none;
-    padding-bottom: 20px;
-  }
-  :deep(.el-input__count) {
-    background-color: rgba(255, 255, 255, 0);
-  }
 }
 
 .el-form-item {

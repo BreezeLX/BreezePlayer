@@ -3,7 +3,11 @@
     <playlistInfo :playlist="playlist" :playAll="playAll"></playlistInfo>
     <el-tabs class="mt-3" v-model="tab">
       <el-tab-pane lazy :label="`歌曲 ${songs.length}`" name="tracks">
-        <songList :songs="songs"></songList>
+        <songList
+          :songs="songs"
+          :playList="playlist"
+          @delMusicFromList="delMusicFromList"
+        ></songList>
       </el-tab-pane>
       <el-tab-pane lazy label="评论" name="comments">1</el-tab-pane>
     </el-tabs>
@@ -41,8 +45,14 @@ const getData = () => {
     playlist.value = res;
   });
   getPlayListTrackAll(id).then((res) => {
-    console.log('歌单歌曲', res);
     songs.value = res;
+  });
+};
+
+//父组件静态删除歌曲
+let delMusicFromList = ({ id }) => {
+  songs.value = songs.value.filter((item) => {
+    return item.id != id;
   });
 };
 

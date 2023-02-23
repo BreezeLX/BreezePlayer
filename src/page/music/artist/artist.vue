@@ -42,9 +42,8 @@
   </div>
   <div class="py-10">
     <el-button
-      class="text-center w-full"
+      class="Btn text-center w-full"
       @click="loadMore"
-      color="rgb(30, 30, 31)"
       :loading="pageData.loading"
       >加载更多</el-button
     >
@@ -181,8 +180,5 @@ const options: Ioptions[] = [
 <style lang="scss" scoped>
 .active {
   @apply bg-emerald-400 text-white rounded;
-}
-.el-button {
-  color: rgb(222, 222, 222);
 }
 </style>

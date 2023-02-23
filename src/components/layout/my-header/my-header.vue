@@ -1,9 +1,7 @@
 <template>
   <div class="header flex items-center justify-between">
     <div class="flex flex-grow lg:w-3/4">
-      <div class="text-white hidden pl-8 pr-8 miniplayer:block">
-        BreezePlayer
-      </div>
+      <div class="hidden pl-8 pr-8 miniplayer:block">BreezePlayer</div>
       <div class="top-btn-wrap flex items-center">
         <el-icon :size="20" class="m-2 cursor-pointer hover:text-gray-400"
           ><i-ep-arrowLeft @click="checkTopBtn('forward')"
@@ -35,12 +33,13 @@
           <i class="pl-2 cursor-pointer">登录</i>
         </div>
       </div>
-
       <IconPark
-        :icon="Platte"
+        :icon="theme == 'dark' ? Moon : SunOne"
         size="20"
         class="text-slate-400 mx-2 hover-text"
+        @click="changeTheme"
       ></IconPark>
+
       <IconPark
         :icon="Mail"
         size="20"
@@ -88,7 +87,7 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { Search } from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
-import { Platte, Lock, Phone, Mail } from '@icon-park/vue-next';
+import { Platte, Lock, Phone, Mail, SunOne, Moon } from '@icon-park/vue-next';
 import { useUserStore } from '@/store/user';
 import { getQrKey, createQrImage, checkQrStatus } from '@/service/modules/user';
 import { storeToRefs } from 'pinia';
@@ -101,8 +100,17 @@ const phone = ref('');
 const password = ref('');
 const qr = ref('');
 let { checkLoginStatus } = useUserStore();
-let { profile, isLogin } = storeToRefs(useUserStore());
+let { profile, isLogin, theme } = storeToRefs(useUserStore());
 
+let changeTheme = () => {
+  if (theme.value == 'dark') {
+    theme.value = 'light';
+
+    //设置全局样式
+  } else {
+    theme.value = 'dark';
+  }
+};
 //弹出登录层
 let timer;
 let checkLogin = async () => {
@@ -155,7 +163,7 @@ onMounted(checkLoginStatus);
   height: 58px;
   width: 100%;
   // border-bottom: 1px solid #ddd;
-  background-color: rgb(48, 49, 51);
+  // background-color: rgb(48, 49, 51);
 }
 
 .inputDeep {
@@ -168,7 +176,6 @@ onMounted(checkLoginStatus);
   }
 
   :deep(.el-input__wrapper) {
-    background-color: rgb(255, 255, 255);
     box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color));
   }
 }

@@ -11,26 +11,29 @@
 <script lang="ts" setup>
 import playerfooter from '@/components/layout/footer/footer.vue';
 import PlayList from '../playList/playList.vue';
+import { useRoute } from 'vue-router';
+import { watch, ref } from 'vue';
+let route = useRoute();
+let contaierBg = ref();
+watch(
+  () => route.name,
+  (newVal) => {
+    console.log(newVal);
+    if (newVal == 'musicDetail') {
+      contaierBg.value = '#000';
+    } else {
+      contaierBg.value = '';
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>
 .el-scrollbar {
   width: 100%;
   padding: 15px !important;
-  background-color: rgb(30, 30, 31);
+  background-color: v-bind('contaierBg');
   height: calc(100% - 89px) !important;
-}
-:deep(.el-overlay) {
-  position: absolute !important;
-  .el-drawer {
-    @apply w-full miniplayer:w-1/2 #{!important};
-  }
-  .el-drawer__header {
-    margin: 0;
-  }
-  .el-drawer__body {
-    padding: 0px;
-  }
 }
 
 :deep(.el-dialog) {

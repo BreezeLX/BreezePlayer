@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar>
+  <el-scrollbar class="side-menu">
     <menu-wrapper></menu-wrapper>
   </el-scrollbar>
 </template>
@@ -10,7 +10,6 @@
 .el-scrollbar {
   box-sizing: border-box;
   height: 100% !important;
-  /* background-color: rgb(155, 114, 114); */
   padding: 0 30px;
   border-right: 1px solid rgb(255, 255, 255)255);
 }

@@ -1,11 +1,9 @@
 <template>
   <div class="flex player-song overflow-hidden">
-    <div class="h-full p-2 flex-shrink-0">
+    <div class="h-full p-2 flex-shrink-0" @click="showPlayDetail">
       <img
         class="cur-song-img h-full rounded-md cursor-pointer"
-        :src="
-          song.al?.picUrl ? song.al.picUrl : '../../../static/OpticalDisk.png'
-        "
+        :src="song.al?.picUrl ? song.al.picUrl : OpticalDisk"
       />
     </div>
     <div class="ml-1 text-base flex flex-col justify-center">
@@ -59,7 +57,19 @@ import IconPark from '@/components/common/IconPark.vue';
 import { Like, DownTwo, MoreTwo, Comment } from '@icon-park/vue-next';
 import { usePlayerStore } from '@/store/player';
 import { storeToRefs } from 'pinia';
+import { OpticalDisk } from '@/assets/img/index';
+import { useRouter } from 'vue-router';
+import Bus from '@/utils/eventBus';
+
+let router = useRouter();
 const { loopType, song, isPlaying, isPause } = storeToRefs(usePlayerStore());
+let showPlayDetail = () => {
+  if (song.value.id) {
+    router.push({ name: 'musicDetail' });
+    // 通知侧边栏隐藏
+    Bus.$emit('toggleSideMenu');
+  }
+};
 </script>
 
 <style scoped lang="scss">

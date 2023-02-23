@@ -1,14 +1,12 @@
-
-// 底部音量popper
-.el-popover.popperClass.el-popper.is-light{
-  background-color: rgb(30, 30, 31);
+.el-popover.popperClass.el-popper.is-light {
+  background-color: rgb(48, 48, 48);
 }
 
-.popperClass.el-popover.is-light .el-popper__arrow::before{
-  background-color: rgb(30, 30, 31);
+.popperClass.el-popover.is-light .el-popper__arrow::before {
+  background-color: rgb(48, 48, 48);
 }
 
- .popover-width{
+.popover-width {
   width: 98% !important;
   @apply miniplayer:w-2/4 #{!important};
 }

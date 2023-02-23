@@ -107,6 +107,15 @@ const routes: Array<RouteRecordRaw> = [
           menu: 'recent',
           keepAlive: true
         }
+      },
+      {
+        path: 'musicDetail',
+        name: 'musicDetail',
+        component: () => import('@/page/musicPlayDetail/musicPlayDetail.vue'),
+        meta: {
+          menu: 'musicDetail',
+          keepAlive: true
+        }
       }
     ]
   }

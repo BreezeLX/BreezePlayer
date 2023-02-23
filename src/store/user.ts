@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { getAccountInfo, getUserDetail } from '@/service/modules/user';
 import type { UserProfile } from '@/models/user';
-import { getUserMusicList } from '@/service/modules/playlist';
+import { useMusicPlayList } from '@/store/musicPlayList';
 
 export const useUserStore = defineStore('user', {
   state: () => {
@@ -11,7 +11,7 @@ export const useUserStore = defineStore('user', {
       showLogin: false,
       profile: {} as UserProfile,
       isLogin: false,
-      musicList: [] as any[]
+      theme: 'dark'
     };
   },
   // getters: {
@@ -24,16 +24,12 @@ export const useUserStore = defineStore('user', {
       // 获取账号信息
       let userInfo = await getAccountInfo();
       if (userInfo.code == 200 && userInfo.profile) {
-        console.log('获取账号信息', userInfo.profile);
         this.profile = userInfo.profile;
         this.isLogin = true;
-        this.getUserMusicListAction();
-      }
-    },
-    async getUserMusicListAction() {
-      if (this.profile) {
-        let { playlist } = await getUserMusicList({ uid: this.profile.userId });
-        this.musicList = playlist;
+        // 保存用户信息到本地
+        localStorage.setItem('userId', userInfo.profile.userId);
+        let { getMyMusicListAction } = useMusicPlayList();
+        getMyMusicListAction(userInfo.profile.userId);
       }
     }
   }

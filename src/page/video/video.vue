@@ -55,9 +55,8 @@
     </div>
     <div class="py-10">
       <el-button
-        class="text-center w-full"
+        class="Btn text-center w-full"
         @click="loadMore"
-        color="rgb(30, 30, 31)"
         :loading="loading"
         >加载更多</el-button
       >
@@ -113,11 +112,4 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped lang="scss">
-button {
-  border: 1px solid rgba(255, 255, 255, 0.289);
-}
-.el-button {
-  color: rgb(222, 222, 222);
-}
-</style>
+<style scoped lang="scss"></style>

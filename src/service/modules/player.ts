@@ -15,3 +15,14 @@ export function getDetail(id: number) {
     method: 'get'
   });
 }
+
+// 获取歌词
+export function getSongWords(id: number) {
+  return LxRequest.request({
+    url: '/lyric/new',
+    method: 'get',
+    params: {
+      id
+    }
+  });
+}

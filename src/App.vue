@@ -1,5 +1,5 @@
 <template>
-  <main-box slot="">
+  <main-box slot="" class="select-none">
     <router-view></router-view>
   </main-box>
 </template>

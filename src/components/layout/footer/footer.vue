@@ -1,7 +1,7 @@
 <template>
-  <div style="height: 90px" class="bg-slate-900 flex items-stretch">
+  <div style="height: 90px" class="item-split-line-t flex items-stretch">
     <div class="flex-1 miniplayer:flex-none h-full">
-      <currentSong />
+      <currentSong></currentSong>
     </div>
     <div class="sm:flex-1 h-full">
       <PlayerController />

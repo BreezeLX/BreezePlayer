@@ -10,7 +10,6 @@ export async function getPlayListDetail(id: number, s: number = 8) {
 
 // 获取歌单音乐
 export async function getPlayListTrackAll(id: number) {
-  console.log('拿到的蚕食', id);
   const data = await LxRequest.request({
     url: `playlist/track/all?id=${id}`,
     method: 'get'
@@ -41,13 +40,47 @@ export async function getTopPlaylistHighquality(params?: {
 
 // 获取用户歌单
 export async function getUserMusicList(obj) {
-  console.log(obj);
   return await LxRequest.request({
     url: '/user/playlist',
     params: {
       uid: obj.uid,
       limit: obj.limit || 30,
       offset: obj.offset || 0
+    }
+  });
+}
+
+// 对歌单添加或删除歌曲
+interface IOperateMusic {
+  op: 'add' | 'del';
+  pid: any;
+  tracks: any;
+}
+
+export async function moveMusicToList<T extends IOperateMusic>(obj: T) {
+  return await LxRequest.request({
+    url: '/playlist/tracks',
+    params: {
+      op: obj.op,
+      pid: obj.pid,
+      tracks: obj.tracks
+    }
+  });
+}
+
+// 新建歌单
+interface ICreateMusicList {
+  name: string;
+  privacy?: any;
+  type?: 'NORMAL' | 'VIDEO';
+}
+export async function createMusicList<T extends ICreateMusicList>(obj: T) {
+  return await LxRequest.request({
+    url: '/playlist/create',
+    params: {
+      name: obj.name,
+      privacy: obj.privacy,
+      type: obj.type
     }
   });
 }

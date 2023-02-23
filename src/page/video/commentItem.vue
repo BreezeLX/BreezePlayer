@@ -1,5 +1,5 @@
 <template>
-  <div class="flex py-9 border-opacity-20 border-white border-b">
+  <div class="flex py-9 border-opacity-20 item-split-line">
     <el-avatar
       class="flex-shrink-0"
       :size="40"
@@ -44,7 +44,7 @@
               <div class="flex w-full justify-end pt-2">
                 <div
                   @click="sendCommentAction(itemData?.commentId)"
-                  class="cursor-pointer h-10 w-28 ml-2 bg-gray-600 rounded text-center flex items-center justify-center"
+                  class="main-color cursor-pointer h-10 w-28 ml-2 rounded text-center flex items-center justify-center"
                 >
                   <span>发送</span>
                 </div>
@@ -56,7 +56,7 @@
 
       <!-- 回复区域 -->
       <div
-        class="bg-gray-800 px-3 py-4 rounded-md mt-2 text-sm"
+        class="relay-area-wrap px-3 py-4 rounded-md mt-2 text-sm"
         v-if="floorCommentList?.length"
       >
         <div
@@ -124,7 +124,7 @@
                         <div class="flex w-full justify-end pt-2">
                           <div
                             @click="sendCommentAction(item?.commentId, true)"
-                            class="cursor-pointer h-10 w-28 ml-2 bg-gray-600 rounded text-center flex items-center justify-center"
+                            class="main-color cursor-pointer h-10 w-28 ml-2 rounded text-center flex items-center justify-center"
                           >
                             <span>发送</span>
                           </div>
@@ -298,30 +298,30 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.inputDeep {
-  ::-webkit-scrollbar {
-    width: 8px; /*滚动条宽度*/
-    height: 8px; /*滚动条高度*/
-  }
-  .el-textarea__inner::-webkit-scrollbar-thumb {
-    background-color: rgba(168, 168, 168, 0.4); /*滚动条默认显示的颜色*/
-  }
+// .inputDeep {
+//   ::-webkit-scrollbar {
+//     width: 8px; /*滚动条宽度*/
+//     height: 8px; /*滚动条高度*/
+//   }
+//   .el-textarea__inner::-webkit-scrollbar-thumb {
+//     background-color: rgba(168, 168, 168, 0.4); /*滚动条默认显示的颜色*/
+//   }
 
-  .el-textarea__inner::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    background-color: white; /*滚动条背景色显示的颜色*/
-  }
-  :deep(.el-textarea__inner) {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.276) inset;
-    background-color: rgba(255, 0, 0, 0);
-    resize: none;
-    padding-bottom: 20px;
-  }
-  :deep(.el-input__count) {
-    background-color: rgba(255, 255, 255, 0);
-  }
-}
+//   .el-textarea__inner::-webkit-scrollbar {
+//     width: 8px;
+//     height: 8px;
+//     background-color: white; /*滚动条背景色显示的颜色*/
+//   }
+//   :deep(.el-textarea__inner) {
+//     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.276) inset;
+//     background-color: rgba(255, 0, 0, 0);
+//     resize: none;
+//     padding-bottom: 20px;
+//   }
+//   :deep(.el-input__count) {
+//     background-color: rgba(255, 255, 255, 0);
+//   }
+// }
 
 .el-form-item {
   margin: 0;

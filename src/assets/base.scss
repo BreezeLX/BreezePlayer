@@ -1,43 +1,34 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+// :root {
+//   --el-color-primary: #34d399 !important;
+//   --el-color-primary-light-1: #065f46 !important;
+//   --el-color-primary-light-2: #047857 !important;
+//   --el-color-primary-light-3: #059669 !important;
+//   --el-color-primary-light-4: #10b981 !important;
+//   --el-color-primary-light-5: #34d399 !important;
+//   --el-color-primary-light-6: #6ee7b7 !important;
+//   --el-color-primary-light-7: #a7f3d0 !important;
+//   --el-color-primary-light-8: #d1fae5 !important;
+//   --el-color-primary-light-9: #ecfdf5 !important;
+//   --el-color-primary-dark-2: #337ecc !important;
+//   --el-text-color-primary: text-slate-700;
+// }
 :root {
-  --el-color-primary: #34d399 !important;
-  --el-color-primary-light-1: #065f46 !important;
-  --el-color-primary-light-2: #047857 !important;
-  --el-color-primary-light-3: #059669 !important;
-  --el-color-primary-light-4: #10b981 !important;
-  --el-color-primary-light-5: #34d399 !important;
-  --el-color-primary-light-6: #6ee7b7 !important;
-  --el-color-primary-light-7: #a7f3d0 !important;
-  --el-color-primary-light-8: #d1fae5 !important;
-  --el-color-primary-light-9: #ecfdf5 !important;
-  --el-color-primary-dark-2: #337ecc !important;
-  --el-text-color-primary: text-slate-700;
+  --el-color-primary: #059669 !important;
+  --el-color-primary-light-9: #57534e !important;
+  --el-border-color-base: #57534e !important;
+  --el-text-color-regular: #e2e8f0 !important;
+  --el-text-color-primary: text-slate-200 !important;
+  --el-bg-color: #474648 !important;
+  --el-color-white: #1e1e1f !important;
+  --el-border-color-lighter: #474648 !important;
+  --el-border-color-light: #474648 !important;
+  --el-popover-bg-color: #292524 !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --el-color-primary: #059669 !important;
-
-    --el-color-primary-light-9: #57534e !important;
-
-    --el-border-color-base: #57534e !important;
-    --el-text-color-regular: #e2e8f0 !important;
-    --el-text-color-primary: text-slate-200 !important;
-    --el-bg-color: #474648 !important;
-    --el-color-white: #1e1e1f !important;
-    --el-border-color-lighter: #474648 !important;
-    --el-border-color-light: #474648 !important;
-
-    --el-popover-bg-color: #292524 !important;
-  }
-}
-
-html, body {
+html,
+body {
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
-  'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
   @apply text-slate-700 bg-white;
   @apply dark:bg-[#1e1e1f] dark:text-slate-100;
 }
@@ -62,4 +53,23 @@ html, body {
 
 .el-tabs__header {
   @apply m-0;
+}
+
+.el-input__inner {
+  color: #000 !important;
+}
+
+.el-input__wrapper {
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 0 0px var(--el-input-border-color, var(--el-border-color));
+}
+
+.el-message-box__btns {
+  .el-button {
+    background-color: rgb(60, 60, 60) !important;
+    color: #fff !important;
+  }
+  .el-button--primary {
+    border: #fff 1px solid;
+  }
 }

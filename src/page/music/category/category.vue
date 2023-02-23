@@ -16,17 +16,16 @@
         :play-count="item.playCount"
         show-play-count
       />
-      <div class="mt-2 text-xs text-main leading-5">{{ item.name }}</div>
-      <div class="mt-2 text-xs text-main truncate text-dc">
+      <div class="mt-2 text-xs leading-5">{{ item.name }}</div>
+      <div class="mt-2 text-xs truncate text-dc">
         {{ item.creator.nickname }}
       </div>
     </div>
   </div>
   <div class="py-10" v-if="pageData.more">
     <el-button
-      class="text-center w-full"
+      class="Btn text-center w-full"
       @click="loadMore"
-      color="rgb(30, 30, 31)"
       :loading="pageData.loading"
       >加载更多</el-button
     >
@@ -90,8 +89,4 @@ const loadMore = () => {
 
 onMounted(getData);
 </script>
-<style lang="scss" scoped>
-.el-button {
-  color: rgb(222, 222, 222);
-}
-</style>
+<style lang="scss" scoped></style>

@@ -39,6 +39,7 @@
       <div class="w-10 hidden sm:block">{{ useFormatDuring(currentTime) }}</div>
       <div class="flex-1 px-3 hidden sm:block">
         <el-slider
+          class="slider-bar"
           :show-tooltip="false"
           v-model="currentTime"
           @change="sliderChange"
@@ -74,16 +75,4 @@ const { togglePlay, toggleLoop, next, prev, sliderChange, sliderIput } =
   usePlayerStore();
 </script>
 
-<style lang="scss" scoped>
-.el-slider:deep() {
-  .el-slider__button {
-    background-color: rgb(255, 255, 255) !important;
-    border: #000;
-    height: 10px;
-    width: 10px;
-  }
-  .el-slider__bar {
-    background-color: rgb(148, 163, 184);
-  }
-}
-</style>
+<style lang="scss" scoped></style>

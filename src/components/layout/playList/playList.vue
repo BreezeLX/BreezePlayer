@@ -4,9 +4,7 @@
       <div class="px-5 text-xl py-2">播放列表</div>
       <div class="flex justify-between px-5">
         <span>共{{ playListCount }}首</span>
-        <span class="text-slate-400 cursor-pointer" @click="clearPlayList"
-          >清空列表</span
-        >
+        <span class="cursor-pointer" @click="clearPlayList">清空列表</span>
       </div>
       <el-empty v-if="playList.length === 0" description="列表暂无歌曲" />
       <div class="flex-1 overflow-hidden">
@@ -37,7 +35,7 @@ const { play, clearPlayList } = usePlayerStore();
 
 <style lang="scss" scoped>
 :deep(.el-drawer) {
-  background-color: pink !important;
+  // background-color: pink !important;
 }
 .el-scrollbar {
   padding: 0;

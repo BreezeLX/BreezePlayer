@@ -28,13 +28,13 @@
       />
       <IconPark :icon="Down" size="20" v-else theme="outline" />
     </div>
-    <div
-      v-if="createdListSpread"
-      v-for="item in createdList"
-      :key="item.id"
-      @click="checkPlaylist(item.id)"
-    >
-      <div class="pl-2 py-1 flex items-center rounded my-1 cursor-pointer">
+    <div v-if="createdListSpread">
+      <div
+        class="pl-2 py-1 flex items-center rounded my-1 cursor-pointer"
+        v-for="item in createdList"
+        :key="item.id"
+        @click="checkPlaylist(item.id)"
+      >
         <IconPark :icon="MusicMenu" size="20" theme="outline" />
         <span class="truncate ml-1">{{ item.name }}</span>
       </div>
@@ -54,13 +54,13 @@
         />
         <IconPark :icon="Down" size="20" v-else theme="outline" />
       </div>
-      <div
-        v-if="collectListSpread"
-        v-for="item in collectList"
-        :key="item.id"
-        @click="checkPlaylist(item.id)"
-      >
-        <div class="pl-2 py-1 flex items-center rounded my-1 cursor-pointer">
+      <div v-if="collectListSpread">
+        <div
+          class="pl-2 py-1 flex items-center rounded my-1 cursor-pointer"
+          v-for="item in collectList"
+          :key="item.id"
+          @click="checkPlaylist(item.id)"
+        >
           <IconPark :icon="MusicMenu" size="20" theme="outline" />
           <span class="truncate ml-1">{{ item.name }}</span>
         </div>
@@ -85,9 +85,10 @@ import {
 } from '@icon-park/vue-next';
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, reactive, ref, watch } from 'vue';
-import { getUserMusicList } from '@/service/modules/playlist';
-import { useUserStore } from '@/store/user';
+import { useMusicPlayList } from '@/store/musicPlayList';
 import { storeToRefs } from 'pinia';
+
+const { musicList, collectList, createdList } = storeToRefs(useMusicPlayList());
 
 interface IMenu {
   name: string;
@@ -165,30 +166,14 @@ const menus: IMenus[] = [
 const route = useRoute();
 const currentKey = ref(route.meta.menu);
 const router = useRouter();
-const { musicList } = storeToRefs(useUserStore());
 
 let createdListSpread = ref(false);
 let collectListSpread = ref(false);
-let createdList = reactive<any[]>([]);
-let collectList = reactive<any[]>([]);
 
 watch(
   () => route.meta.menu,
   (menu) => {
     currentKey.value = menu;
-  }
-);
-
-watch(
-  musicList,
-  (newVal: any[]) => {
-    console.log(newVal);
-    collectList = newVal.filter((item) => item.subscribed);
-    createdList = newVal.filter((item) => !item.subscribed);
-  },
-  {
-    immediate: true,
-    deep: true
   }
 );
 
@@ -209,24 +194,10 @@ let checkPlaylist = async (id: number) => {
 const click = async (menu: IMenu) => {
   await router.push({ name: menu.key, replace: true });
 };
-
-const getData = async () => {
-  // collectList = playlist.filter((item) => item.subscribed);
-  // console.log('我收藏的歌单', collectList);
-  // let createdList = playlist.filter((item) => !item.subscribed);
-};
-
-onMounted(() => {
-  getData();
-});
 </script>
 
 <style scoped lang="scss">
-.active {
-  background-color: rgba(181, 181, 181, 0.475);
-}
 .side-wrapper {
-  color: rgb(102, 102, 102);
   font-size: 15px;
 }
 .side-title {

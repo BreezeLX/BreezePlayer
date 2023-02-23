@@ -15,7 +15,7 @@
         show-play-count
         @click="checkPlayList(item)"
       />
-      <div class="mt-2 text-xs text-main truncate">{{ item.name }}</div>
+      <div class="mt-2 text-xs truncate">{{ item.name }}</div>
     </div>
   </div>
 </template>

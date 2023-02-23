@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-gray-700 flex p-2 rounded items-center cursor-pointer 2xl:w-2/3"
+    class="hover-bg-view bg-dc flex p-2 rounded items-center cursor-pointer 2xl:w-2/3"
   >
     <el-image class="flex-shrink-0" fit="cover" :src="videoItem.coverUrl" />
     <div>
